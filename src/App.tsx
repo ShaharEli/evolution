@@ -55,14 +55,15 @@ function App() {
           (
             JSON.parse(localStorage.getItem("prevData") as any)
               .nextGen as Creature[]
-          ).map(
-            (e: any) =>
-              new Creature(e.color, e.size, undefined, {
-                biases: e.biases,
-                weights: e.weights,
-                layers: e.layers,
-              })
-          )
+          ).map((e: any) => {
+            const c = new Creature(e.color, e.size, undefined, {
+              biases: e.biases,
+              weights: e.weights,
+              layers: e.layers,
+            });
+            c.brain.net.mutate();
+            return c;
+          })
         )
       : new Array(CREATURES_AMOUNT)
           .fill(null)
