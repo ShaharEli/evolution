@@ -1,7 +1,7 @@
 {
   "name": "evolution",
   "version": "0.1.0",
-  "homepage": "https://shahar_eli.github.io/evolution",
+  "homepage": "https://ShaharEli.github.io/evolution",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
