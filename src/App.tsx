@@ -6,6 +6,8 @@ import { getRandomColor } from "utils/color";
 import { CREATURES_AMOUNT, SURVIVAL_RATE, TIME } from "utils/consts";
 
 function App() {
+  const [raysOn, setRaysOn] = useState(false);
+
   const populate = (parents: Creature[]) => {
     const totalFitness = parents.reduce((acc, s) => acc + s.fitness, 0);
 
@@ -39,15 +41,6 @@ function App() {
     }
 
     return selectedSurvivors;
-    // return [
-    //   parents[0].makeChild(parents[0]),
-    //   parents[0].makeChild(parents[1]),
-    //   ...new Array(CREATURES_AMOUNT - 2).fill(null).map(() => {
-    //     const first = parents[Math.floor(Math.random() * parents.length)];
-    //     const second = parents[Math.floor(Math.random() * parents.length)];
-    //     return first.makeChild(second);
-    //   }),
-    // ];
   };
   const [creatures, setCreatures] = useState(
     localStorage.getItem("prevData")
@@ -126,17 +119,29 @@ function App() {
         document.title = `${Math.floor(
           Math.max(bestScore, parents[0].fitness)
         )}`;
+        if (raysOn) {
+          nextGen.forEach((c) => c.toggleRaysShown());
+        }
         return nextGen;
       });
     }, 1000 * TIME);
     return () => clearInterval(interval);
-  }, [bestScore, generation, creatures]);
+  }, [bestScore, generation, creatures, raysOn]);
 
   const target = useMemo(() => new Creature("red", 20), []);
 
   return (
     <div className="w-full h-full">
-      <Toolbar {...{ setBestScore, setGeneration, setCreatures(cs) {} }} />
+      <Toolbar
+        {...{
+          setBestScore,
+          setGeneration,
+          setCreatures,
+          creatures,
+          raysOn,
+          setRaysOn,
+        }}
+      />
       <h2 className="mx-auto my-2 text-center">Gen: {generation}</h2>
       <h2 className="mx-auto my-2 text-center">Best score: {bestScore}</h2>
       <h2 className="mx-auto my-2 text-center">

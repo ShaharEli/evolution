@@ -41,11 +41,15 @@ export class Creature {
       (!!netConfig
         ? new Brain(netConfig.layers, netConfig.weights, netConfig.biases)
         : new Brain([10, 6, 4]));
-    this.vision = new Vision(this.x, this.y);
+    this.vision = new Vision(this.x, this.y, undefined, undefined, false);
     this.prevFitnessCalc = Infinity;
     this.timesFittedTheSame = 0;
     this.prevColor = this.color;
     this.ctx = null;
+  }
+
+  toggleRaysShown() {
+    this.vision.toggleRaysShown();
   }
   place(x: number, y: number) {
     this.x = x;

@@ -30,6 +30,9 @@ export class Vision {
     this.x = position[0];
     this.y = position[1];
   }
+  toggleRaysShown() {
+    this.raysShown = !this.raysShown;
+  }
 
   checkCollide(x1: number, y1: number, x2: number, y2: number, size: number) {
     const dx = x1 - this.x;
@@ -67,9 +70,10 @@ export class Vision {
       ctx.lineTo(this.x + dx, this.y + dy);
       if (this.raysShown) {
         ctx.strokeStyle = collided ? "red" : this.color;
+
+        ctx.stroke();
       }
 
-      ctx.stroke();
       if (collided) {
         return (
           1 -
